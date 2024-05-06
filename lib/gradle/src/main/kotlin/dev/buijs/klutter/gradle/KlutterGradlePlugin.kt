@@ -139,9 +139,6 @@ private fun TaskContainer.registerTasks() {
 
             GetProtoc ->
                 registerTask<GetProtocGradleTask>(gradleTaskName)
-
-            GetKradle ->
-                registerTask<CopyAndroidAarFileGradleTask>(gradleTaskName)
         }
     }
 }

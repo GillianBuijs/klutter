@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.9.0"
+    kotlin("jvm") version "1.9.10"
     id("java-gradle-plugin")
 }
 
@@ -24,7 +24,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10")
         //classpath("com.android.tools.build:gradle:8.1.4")
     }
 }
@@ -38,7 +38,7 @@ allprojects {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10")
     implementation("org.gradle.kotlin:gradle-kotlin-dsl-plugins:2.4.0")
     implementation(gradleApi())
 }

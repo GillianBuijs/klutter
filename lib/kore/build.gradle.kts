@@ -1,18 +1,10 @@
 plugins {
     kotlin("jvm")
-    kotlin("plugin.serialization") version "1.9.0"
+    kotlin("plugin.serialization") version "1.9.10"
     id("klutter")
     id("groovy")
     id("maven-publish")
-    //id("java-library")
 }
-
-//java {
-//    withJavadocJar()
-//    withSourcesJar()
-//    sourceCompatibility = JavaVersion.VERSION_17
-//    targetCompatibility = JavaVersion.VERSION_17
-//}
 
 kotlin {
     jvmToolchain {

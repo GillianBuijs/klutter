@@ -1,5 +1,5 @@
 plugins {
-    kotlin("plugin.serialization") version "1.9.0"
+    kotlin("plugin.serialization") version "1.9.10"
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
@@ -9,13 +9,6 @@ plugins {
 
 group = "dev.buijs.klutter"
 version = dev.buijs.klutter.ProjectVersions.kompose
-
-//java {
-////    withJavadocJar()
-////    withSourcesJar()
-////    sourceCompatibility = JavaVersion.VERSION_17
-////    targetCompatibility = JavaVersion.VERSION_17
-//}
 
 kotlin {
     jvmToolchain {
@@ -91,7 +84,6 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21
-//        targetSdk = 31
     }
 }
 
