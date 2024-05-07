@@ -107,8 +107,8 @@ internal open class CompileProtoSchemasGradleTask: AbstractTask() {
     override val gradleTaskName = KlutterGradleTaskName.CompileProtoSchemas
 
     init {
-        super.dependsOn(KlutterGradleTaskName.GetProtocDart, KlutterGradleTaskName.GetProtoc)
-        super.finalizedBy(KlutterGradleTaskName.GenerateFlutterLib)
+        super.dependsOn(KlutterGradleTaskName.GetProtocDart.taskName, KlutterGradleTaskName.GetProtoc.taskName)
+        super.finalizedBy(KlutterGradleTaskName.GenerateFlutterLib.taskName)
     }
 
     override fun klutterTask(): KlutterTask =
