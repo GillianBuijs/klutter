@@ -56,3 +56,34 @@ internal fun KSClassDeclaration.toKotlinClassWrapper(responses: Set<AbstractType
         className ="$this",
         packageName = packageName.asString())
 }
+
+@ExcludeFromJacocoGeneratedReport(
+    reason = "Requires way too much mocking/stubbing. Is test through module test-ksp.")
+internal fun KSClassDeclaration.toKotlinClassWrapper(): KCController {
+
+    val constructors: List<KSFunctionDeclaration> = getConstructors().toList()
+
+    val controllerType = annotations
+        .filter { it.shortName.asString() == "Controller" }
+        .filter { it.arguments.isNotEmpty() }
+        .map { it.arguments.firstOrNull { arg -> arg.name?.getShortName() == "type" } }
+        .filterNotNull()
+        .map { it.value.toString() }
+        .firstOrNull { it.startsWith("dev.buijs.klutter.annotations.ControllerType.") }
+        ?.substringAfterLast("dev.buijs.klutter.annotations.ControllerType.")
+        ?: "Default"
+
+    val publisherOrNull =
+        superTypes.firstOrNull { it.toString() == "Publisher" }
+
+    return KCController(
+        hasOneConstructor = constructors.size == 1,
+        firstConstructorHasNoParameters = constructors.firstOrNull()?.parameters?.isEmpty() ?: false,
+        events = emptyList(),
+        eventErrors =  emptyList(),
+        controllerType = controllerType,
+        isBroadcastController = publisherOrNull != null,
+        broadcastTypeParameterOrBlank = publisherOrNull?.resolve()?.arguments?.first()?.type?.toString() ?: "",
+        className ="$this",
+        packageName = packageName.asString())
+}

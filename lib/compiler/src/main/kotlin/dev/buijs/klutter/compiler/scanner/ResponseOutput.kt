@@ -57,6 +57,7 @@ internal fun Either<String,SquintMessageSource>.writeOutput(
         is EitherOk -> {
             val file = folder.resolve("$squintJsonMetadataPrefix${data.type.className.lowercase()}.json")
             file.createNewFile()
+
             when (data.squintType) {
                 is SquintCustomType ->
                     file.writeText(JSON.encodeToString(data.squintType))
@@ -64,6 +65,35 @@ internal fun Either<String,SquintMessageSource>.writeOutput(
                     file.writeText(JSON.encodeToString(data.squintType))
             }
             return ValidSquintType(data = data.copy(source = file))
+        }
+    }
+
+}
+
+/**
+ * Write FQDN of Response class or error message to [outputFolder].
+ */
+internal fun Either<String,String>.writeResponseFQDN(
+    outputFolder: File, count: Int
+): Either<String,String> {
+
+    val folder = outputFolder
+        .resolve("response")
+        .maybeCreateFolder()
+
+    return when (this) {
+        is EitherNok -> {
+            val file = folder.resolve("${count}_invalid.txt")
+            file.createNewFile()
+            file.writeText(data)
+            Either.nok(data)
+        }
+
+        is EitherOk -> {
+            val file = folder.resolve("proto_${count}.txt")
+            file.createNewFile()
+            file.writeText(data)
+            Either.ok(data)
         }
     }
 

@@ -5,7 +5,6 @@ include(":lib:compiler")
 include(":lib:gradle")
 include(":lib:jetbrains")
 include(":lib:kompose")
-include(":lib:kradle")
 include(":lib:kore")
 // Internal Testing library
 include(":lib-test")

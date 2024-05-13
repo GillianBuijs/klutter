@@ -104,7 +104,7 @@ Also add the json dependency to the commonMain sourceset:
 ```kotlin
  val commonMain by getting {
     dependencies {
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
     }
 }
 ```

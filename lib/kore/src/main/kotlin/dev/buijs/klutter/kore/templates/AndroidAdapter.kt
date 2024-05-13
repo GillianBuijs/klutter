@@ -29,6 +29,7 @@ import dev.buijs.klutter.kore.common.toSnakeCase
 class AndroidAdapter(
     private val pluginPackageName: String,
     private val pluginClassName: String,
+    private val isProtobufEnabled: Boolean,
     methodChannels: Set<String>,
     eventChannels: Set<String>,
     controllers: Set<Controller>,
@@ -57,7 +58,7 @@ class AndroidAdapter(
     )
 
     private val importsControllers = controllers
-        .mapNotNull { controller -> controller.packageName }
+        .map { controller -> controller.packageName }
         .map { "import $it.*" }
         .toSet()
 
@@ -84,7 +85,7 @@ class AndroidAdapter(
     private val methodChannelHandlerWhenClauses = controllers
         .filter { it.functions.isNotEmpty() }
         .flatMap { controller ->
-            controller.functions.map { it.methodHandlerString(controller.instanceOrConstructor()) }
+            controller.functions.map { it.methodHandlerString(controller.instanceOrConstructor(), isProtobufEnabled) }
         }.sorted()
 
     private val methodChannelNames =
@@ -214,20 +215,21 @@ class AndroidAdapter(
 
 }
 
-private fun Method.methodHandlerString(instanceOrConstuctor: String): String {
+private fun Method.methodHandlerString(instanceOrConstuctor: String, isProtobufEnabled: Boolean): String {
 
     if(requestDataType is CustomType || requestDataType is EnumType) {
-        return methodHandlerStringWithCustomTypeRequestParameter(instanceOrConstuctor)
+        return methodHandlerStringWithCustomTypeRequestParameter(instanceOrConstuctor, isProtobufEnabled)
     }
 
     val requestArgumentOrEmpty =
         if(requestDataType == null) ""
         else "data as ${this.requestDataType.typeSimplename(asKotlinType = true)}"
 
-    val responseDecoderOrEmpty = when(responseDataType) {
+    val encoder = if(isProtobufEnabled) "encodeBuffer()" else "encode()"
+    val responseDecoderOrEmpty = when(this.responseDataType) {
         is StandardType -> ""
-        is Nullable -> "?.encode()"
-        else -> ".encode()"
+        is Nullable -> "?.$encoder"
+        else -> ".$encoder"
     }
 
     val methodInvocation = "$instanceOrConstuctor.$method($requestArgumentOrEmpty)$responseDecoderOrEmpty"
@@ -247,20 +249,27 @@ private fun Method.methodHandlerString(instanceOrConstuctor: String): String {
 
 }
 
-private fun Method.methodHandlerStringWithCustomTypeRequestParameter(instanceOrConstuctor: String): String {
+private fun Method.methodHandlerStringWithCustomTypeRequestParameter(instanceOrConstuctor: String, isProtobufEnabled: Boolean): String {
     val requestType = requestDataType.typeSimplename(asKotlinType = true)
-
+    val encoder = if(isProtobufEnabled) "encodeBuffer()" else "encode()"
     val responseDecoderOrEmpty = when(this.responseDataType) {
         is StandardType -> ""
-        is Nullable -> "?.encode()"
-        else -> ".encode()"
+        is Nullable -> "?.$encoder"
+        else -> ".$encoder"
     }
 
     val methodInvocation = "$instanceOrConstuctor.$method(kJson)$responseDecoderOrEmpty"
+
+    val decoder = if(isProtobufEnabled) {
+        "data.decodeBuffer<$requestType>()"
+    } else {
+        "data.decode() as $requestType?"
+    }
+
     return if(responseDataType is UnitType) {
         """
         |                "$command" -> {
-        |                    val kJson: $requestType? = data.decode() as $requestType?
+        |                    val kJson: $requestType? = $decoder
         |                    if(kJson != null) {
         |                           $methodInvocation
         |                    }
@@ -270,7 +279,7 @@ private fun Method.methodHandlerStringWithCustomTypeRequestParameter(instanceOrC
     } else
         """
         |                "$command" -> {
-        |                    val kJson: $requestType? = data.decode() as $requestType?
+        |                    val kJson: $requestType? = $decoder
         |                    if(kJson != null) {
         |                         result.success($methodInvocation)
         |                    } else {

@@ -29,13 +29,12 @@ import java.io.File
 /**
  * A representation of the structure of a project made with the Klutter Framework.
  * Each property of this object represents a folder containing one or more folders
- * and/or files wich are in some way used or needed by Klutter.
+ * and/or files which are in some way used or needed by Klutter.
  *
  * @property root is the top level of the project.
  * @property ios is the folder containing the iOS frontend code, basically the iOS folder from a standard Flutter project.
  * @property android is the folder containing the Android frontend code, basically the iOS folder from a standard Flutter project.
  * @property platform is the folder containing the native backend code, basically a Kotlin Multiplatform library module.
- * @author Gillian Buijs
  */
 data class Project(
     val root: Root,
@@ -46,11 +45,22 @@ data class Project(
 
 /**
  * Path to Klutter projects cache folder which is <user.home>/.kradle.
+ *
+ * @Throws [KlutterException] if it does NOT exist.
  */
 val kradleHome: File
     get() = File(System.getProperty("user.home"))
         .verifyExists()
         .resolve(".kradle")
+
+/**
+ * Path to Klutter projects protoc folder which is [kradleHome]/.cache/protobuf/protoc.
+ */
+val protocHome: File
+    get() = kradleHome
+        .resolve(".cache")
+        .resolve("protobuf")
+        .resolve("protoc")
 
 /**
  * The root/kradle.env File.

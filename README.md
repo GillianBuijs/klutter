@@ -8,7 +8,6 @@
 Klutter is a framework which interconnects Flutter and Kotlin Multiplatform.
 It can be used to create Flutter plugins.
 
-
 ### Getting started
 - Start a new project with the
   - [Intellij](https://buijs.dev/klutter-3/) plugin

@@ -1,9 +1,13 @@
 # CHANGELOG
 
+## v2024.1.1.beta
+- Remove kradle module from project (kradle is the default executable since [kradle](..%2Fklutter-dart%2Fkradle) 3.0.0).
+- Add support for protocol buffers.
+
 ## v2023.3.1.beta
-- Refactored task module to package in kore.
-- Removed task module from BOM e.a.
-- Renamed kommand to kradle.
+- Refactor task module to package in kore.
+- Remove task module from BOM e.a.
+- Rename kommand to kradle.
 
 ## v2023.2.2.beta
 - Remove example/integration_test folder on project init from example app.
@@ -14,8 +18,6 @@
 - Bugfix: Eventsink received incorrect variable on error.
 - Uses [klutter-dart](https://pub.dev/packages/klutter) version 1.0.0.
 - Uses [klutter-dart-ui](https://pub.dev/packages/klutter_ui) version 1.0.0.
-
-## v2023.3.1.beta
 
 ## v2023.1.1.beta
 - Added support for request parameters.

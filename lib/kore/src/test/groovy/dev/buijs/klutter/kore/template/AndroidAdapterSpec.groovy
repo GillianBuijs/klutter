@@ -302,7 +302,7 @@ class SuperPlugin: FlutterPlugin, MethodCallHandler, StreamHandler, ActivityAwar
 
     def "Verify emptySet is used when there are no method channels"() {
         given:
-        def adapter = new AndroidAdapter("", "", Set.of(), Set.of(), Set.of())
+        def adapter = new AndroidAdapter("", "", false, Set.of(), Set.of(), Set.of())
 
         expect:
         with(adapter.print()) { content ->
@@ -315,7 +315,7 @@ class SuperPlugin: FlutterPlugin, MethodCallHandler, StreamHandler, ActivityAwar
         given:
         def methodReturningVoid = createMethod(new StringType(), new UnitType())
         def controllerWithMethod = new SingletonSimpleController("foo.bar", "MySingleton", [methodReturningVoid])
-        def adapter = new AndroidAdapter("", "", Set.of("foo/bar"), Set.of(), Set.of(controllerWithMethod))
+        def adapter = new AndroidAdapter("", "", false,Set.of("foo/bar"), Set.of(), Set.of(controllerWithMethod))
 
         expect:
         with(adapter.print()) { content ->
@@ -402,6 +402,7 @@ class SuperPlugin: FlutterPlugin, MethodCallHandler, StreamHandler, ActivityAwar
         new AndroidAdapter(
                 packageName,
                 pluginName,
+                false,
                 channels,
                 streams,
                 controllers

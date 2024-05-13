@@ -8,8 +8,14 @@ plugins {
 java {
     withJavadocJar()
     withSourcesJar()
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 sourceSets {
@@ -28,13 +34,13 @@ sourceSets {
 
 dependencies {
     //Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.10")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
     implementation("org.jetbrains.kotlin:kotlin-compiler:1.7.10")
 
     //Jackson for XML
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.14.2")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.16.1")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.1")
 
     //Logging
     implementation("org.slf4j:slf4j-api:2.0.7")
@@ -45,7 +51,7 @@ dependencies {
     api(gradleTestKit())
 
     // Spock
-    api("org.codehaus.groovy:groovy-all:3.0.9")
+    api("org.codehaus.groovy:groovy-all:3.0.17")
     api("org.spockframework:spock-core:2.2-M1-groovy-3.0")
 
     // Mockingjay

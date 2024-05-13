@@ -69,6 +69,8 @@ fun createRootPubspecYamlWriter(
             appendLine("")
             appendDependency(config?.dependencies?.klutterUI ?: klutterUIPubVersion, name = "klutter_ui")
             appendLine("")
+            appendLine("")
+            appendLine("    protobuf: ^3.1.0")
             appendLine("dev_dependencies:")
             appendDependency(config?.dependencies?.klutter ?: klutterPubVersion, name = "klutter")
             appendLine("")

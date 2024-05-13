@@ -22,17 +22,17 @@
 @file:Suppress("unused")
 package dev.buijs.klutter.gradle.dsl
 
+import com.google.devtools.ksp.gradle.KspExtension
 import dev.buijs.klutter.kore.common.ExcludeFromJacocoGeneratedReport
 import org.gradle.api.Project
 import org.gradle.api.tasks.Internal
 import java.io.File
-import java.util.*
 
 /**
  * Glue for the DSL used in a build.gradle(.kts) file and the Klutter tasks.
  */
 @Suppress("MemberVisibilityCanBePrivate")
-open class KlutterExtension(project: Project) {
+open class KlutterExtension(private val project: Project) {
 
     private val handler = KlutterDependencyHandler(project)
 
@@ -43,11 +43,33 @@ open class KlutterExtension(project: Project) {
     @Internal
     internal var plugin: Dto? = null
 
+    internal val features = mutableSetOf<KlutterFeature>()
+
+    internal val isProtobufEnabled: Boolean
+        get() = features.contains(KlutterFeature.PROTOBUF)
+
     /**
      * Configure the Gradle Plugin for a klutter plugin (consumer or producer).
      */
     fun plugin(lambda: KlutterPluginBuilder.() -> Unit) {
         plugin = KlutterPluginBuilder().apply(lambda).build()
+    }
+
+    /**
+     * Enable or disable specific klutter features.
+     *
+     * See for feature list: [KlutterFeature].
+     */
+    fun feature(name: KlutterFeature, enable: Boolean = true) {
+        if(enable) {
+            features.add(name)
+            project.extensions.getByType(KspExtension::class.java)
+                .arg("klutterProtobufEnabled", "true")
+        } else {
+            features.remove(name)
+            project.extensions.getByType(KspExtension::class.java)
+                .arg("klutterProtobufEnabled", "false")
+        }
     }
 
     /**

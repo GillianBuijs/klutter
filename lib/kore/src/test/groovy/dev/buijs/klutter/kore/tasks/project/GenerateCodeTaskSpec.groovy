@@ -21,29 +21,13 @@
  */
 package dev.buijs.klutter.kore.tasks.project
 
-import dev.buijs.klutter.kore.ast.Controller
-import dev.buijs.klutter.kore.ast.CustomType
-import dev.buijs.klutter.kore.ast.Method
-import dev.buijs.klutter.kore.ast.RequestScopedBroadcastController
-import dev.buijs.klutter.kore.ast.RequestScopedSimpleController
-import dev.buijs.klutter.kore.ast.SingletonBroadcastController
-import dev.buijs.klutter.kore.ast.SingletonSimpleController
-import dev.buijs.klutter.kore.ast.SquintCustomType
-import dev.buijs.klutter.kore.ast.SquintCustomTypeMember
-import dev.buijs.klutter.kore.ast.SquintMessageSource
-import dev.buijs.klutter.kore.ast.StringType
-import dev.buijs.klutter.kore.ast.TypeMember
-import dev.buijs.klutter.kore.ast.UnitType
+import dev.buijs.klutter.kore.ast.*
 import dev.buijs.klutter.kore.common.Either
-import dev.buijs.klutter.kore.project.FlutterDistributionFolderName
-import dev.buijs.klutter.kore.project.FlutterDistributionKt
 import dev.buijs.klutter.kore.project.ProjectKt
 import dev.buijs.klutter.kore.project.PubspecBuilder
 import dev.buijs.klutter.kore.tasks.ExecutorKt
 import dev.buijs.klutter.kore.tasks.codegen.GenerateCodeOptions
 import dev.buijs.klutter.kore.tasks.codegen.GenerateCodeTaskKt
-import dev.buijs.klutter.kore.tasks.project.ActionDownloadFlutterKt
-import dev.buijs.klutter.kore.tasks.project.ProjectBuilderTask
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -107,13 +91,16 @@ class GenerateCodeTaskSpec extends Specification {
     def flutterPubGet = flutterExe + " pub get"
 
     @Shared
-    def klutterProducerInit = flutterExe + " pub run klutter:producer init bom=2023.3.1.beta flutter=3.0.5.macos.arm64"
+    def klutterProducerInit = flutterExe + " pub run klutter:kradle init bom=2024.1.1.beta flutter=3.0.5.macos.arm64"
 
     @Shared
-    def klutterConsumerInit = flutterExe + " pub run klutter:consumer init"
+    def klutterConsumerInit = flutterExe + " pub run klutter:kradle init"
 
     @Shared
-    def klutterConsumerAdd = flutterExe + " pub run klutter:consumer add lib=my_awesome_plugin"
+    def klutterConsumerInitIOS = flutterExe + " pub run klutter:kradle init ios=13"
+
+    @Shared
+    def klutterConsumerAdd = flutterExe + " pub run klutter:kradle add lib=my_awesome_plugin"
 
     @Shared
     def iosPodUpdate = "pod update"
@@ -183,6 +170,7 @@ class GenerateCodeTaskSpec extends Specification {
         executor.putExpectation(pathToPlugin, klutterProducerInit)
         executor.putExpectation(pathToExample, klutterConsumerInit)
         executor.putExpectation(pathToExample, klutterConsumerAdd)
+        executor.putExpectation(pathToExample, klutterConsumerInitIOS)
         executor.putExpectation(pathToExampleIos, iosPodUpdate)
         executor.putExpectation(pathToExampleIos, iosPodInstall)
         sut.run()
@@ -224,6 +212,7 @@ class GenerateCodeTaskSpec extends Specification {
         def project = ProjectKt.plugin(pathToPlugin)
         def pubspec = PubspecBuilder.toPubspec(rootPubspecYamlFile)
         def srcFolder = project.root.pathToLibFolder.toPath().resolve("src")
+        Path.of(pathToPlugin).resolve("platform/src/commonMain").toFile().mkdirs()
 
         and:
         executor.putExpectation(pathToPlugin, flutterExe + " pub get")
@@ -244,7 +233,7 @@ class GenerateCodeTaskSpec extends Specification {
 
         and:
         GenerateCodeTaskKt.toGenerateCodeTask(new GenerateCodeOptions(
-                project, pubspec, "3.0.5.macos.arm64", false, controllers, messages, { println("$it") })).run()
+                project, pubspec, "3.0.5.macos.arm64", false, controllers, messages, [],{ println("$it") })).run()
 
         then:
         def flutterLib = project.root.pathToLibFile
@@ -283,9 +272,9 @@ dependencies:
         sdk: flutter
 
     squint_json: ^0.1.2
-    klutter_ui: ^1.0.1
+    klutter_ui: ^1.1.0
 dev_dependencies:
-    klutter: ^2.0.0
+    klutter: ^2.1.0
 flutter:
   plugin:
     platforms:
@@ -311,13 +300,13 @@ dependencies:
     my_awesome_plugin:
         path: ../
 
-    klutter_ui: ^1.0.1
+    klutter_ui: ^1.1.0
     squint_json: ^0.1.2
 dev_dependencies:
     flutter_test:
         sdk: flutter
 
-    klutter: ^2.0.0
+    klutter: ^2.1.0
 flutter:
     uses-material-design: true
 """

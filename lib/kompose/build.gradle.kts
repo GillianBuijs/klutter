@@ -1,6 +1,5 @@
-@file:Suppress("UNUSED_VARIABLE")
 plugins {
-    kotlin("plugin.serialization") version "1.7.0"
+    kotlin("plugin.serialization") version "1.9.10"
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
@@ -12,15 +11,20 @@ group = "dev.buijs.klutter"
 version = dev.buijs.klutter.ProjectVersions.kompose
 
 kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
 
-    android {
+kotlin {
+
+    androidTarget {
         publishLibraryVariants("release", "debug")
     }
 
     jvm()
     iosX64()
     iosArm64()
-    iosArm32()
     iosSimulatorArm64()
     cocoapods {
         summary = "Klutter Kompose module"
@@ -35,7 +39,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 implementation(project(":lib:annotations"))
             }
@@ -46,14 +50,12 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
             }
         }
-        val iosArm32Main by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)
-            iosArm32Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
         }
@@ -62,7 +64,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
                 implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
                 implementation(project(":lib:kore"))
                 implementation(project(":lib:annotations"))
             }
@@ -77,11 +79,11 @@ kotlin {
 }
 
 android {
+    namespace = "dev.buijs.klutter.kompose"
     compileSdk = 31
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21
-        targetSdk = 31
     }
 }
 
@@ -108,7 +110,7 @@ publishing {
 }
 tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
 
-    outputDirectory.set(buildDir.resolve("dokka"))
+    outputDirectory.set(layout.buildDirectory.dir("dokka").get().asFile)
 
     dokkaSourceSets {
         register("kompose") {

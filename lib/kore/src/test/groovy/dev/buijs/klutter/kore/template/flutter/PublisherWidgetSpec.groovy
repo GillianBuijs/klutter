@@ -38,7 +38,8 @@ class PublisherWidgetSpec extends Specification {
                 new FlutterExtension("SayWhatNow"),
                 null,
                 new FlutterMessageType(new StringType()),
-                new FlutterMethod("getSayWhat")
+                new FlutterMethod("getSayWhat"),
+                false
         )
 
         expect:
@@ -53,7 +54,8 @@ class PublisherWidgetSpec extends Specification {
                 new FlutterExtension("SayWhatNow"),
                 null,
                 new FlutterMessageType(new CustomType("MyType", "foo.example", [])),
-                new FlutterMethod("getSayWhat")
+                new FlutterMethod("getSayWhat"),
+                false
         )
 
         expect:
@@ -68,7 +70,8 @@ class PublisherWidgetSpec extends Specification {
                 new FlutterExtension("SayWhatNow"),
                 new FlutterMessageType(new StringType()),
                 new FlutterMessageType(new StringType()),
-                new FlutterMethod("getSayWhat")
+                new FlutterMethod("getSayWhat"),
+                false
         )
 
         expect:
@@ -83,7 +86,8 @@ class PublisherWidgetSpec extends Specification {
                 new FlutterExtension("SayWhatNow"),
                 new FlutterMessageType(new CustomType("MyType", "foo.example", [])),
                 new FlutterMessageType(new CustomType("MyOtherType", "foo.example", [])),
-                new FlutterMethod("getSayWhat")
+                new FlutterMethod("getSayWhat"),
+                false
         )
 
         expect:
@@ -98,7 +102,8 @@ class PublisherWidgetSpec extends Specification {
                 new FlutterExtension("SayWhatNow"),
                 new FlutterMessageType(new StringType()),
                 new FlutterMessageType(new CustomType("MyType", "foo.example", [])),
-                new FlutterMethod("getSayWhat")
+                new FlutterMethod("getSayWhat"),
+                false
         )
 
         expect:
@@ -113,7 +118,8 @@ class PublisherWidgetSpec extends Specification {
                 new FlutterExtension("SayWhatNow"),
                 new FlutterMessageType(new CustomType("MyType", "foo.example", [])),
                 new FlutterMessageType(new StringType()),
-                new FlutterMethod("getSayWhat")
+                new FlutterMethod("getSayWhat"),
+                false
         )
 
         expect:

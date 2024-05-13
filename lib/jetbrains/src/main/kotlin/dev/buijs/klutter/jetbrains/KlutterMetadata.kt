@@ -52,6 +52,6 @@ object KlutterBundle {
  */
 @ExcludeFromJacocoGeneratedReport
 object KlutterIcons {
-    val logo16x16: Icon = IconLoader.getIcon("/pluginIcon16x16.png", KlutterIcons::class.java)
-    val logo20x20: Icon = IconLoader.getIcon("/pluginIcon20x20.png", KlutterIcons::class.java)
+    val logo16x16: Icon = IconLoader.getIcon("/pluginIcon16x16.svg", KlutterIcons::class.java)
+    val logo20x20: Icon = IconLoader.getIcon("/pluginIcon20x20.svg", KlutterIcons::class.java)
 }

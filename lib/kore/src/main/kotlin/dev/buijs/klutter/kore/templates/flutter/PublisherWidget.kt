@@ -99,16 +99,30 @@ fun PublisherWidget.createPrinter(): KlutterPrinter {
     val requiresResponseDecoder =
         responseType.dataType !is StandardType
 
-    val requestEncoderOrBlank = when(requestType?.dataType) {
-        is CustomType -> {
-            "encode: (dynamic data) => (data as ${requestType.dataType.className}).toJson,"
-        }
+    val requestEncoderOrBlank = if(isProtobufEnabled) {
+        when(requestType?.dataType) {
+            is CustomType -> {
+                "encodeBuffer: (dynamic data) => (data as ${requestType.dataType.className}).writeToBuffer(),"
+            }
 
-        is EnumType -> {
-            "encode: (dynamic data) => (data as ${requestType.dataType.className}).toJsonValue,"
-        }
+            is EnumType -> {
+                "encodeBuffer: (dynamic data) => Uint8List.fromList([(data as ${responseType.dataType.className}).value]),"
+            }
 
-        else -> ""
+            else -> ""
+        }
+    } else {
+        when(requestType?.dataType) {
+            is CustomType -> {
+                "encode: (dynamic data) => (data as ${requestType.dataType.className}).toJson,"
+            }
+
+            is EnumType -> {
+                "encode: (dynamic data) => (data as ${requestType.dataType.className}).toJsonValue,"
+            }
+
+            else -> ""
+        }
     }
 
     val template = buildString {
@@ -121,21 +135,37 @@ fun PublisherWidget.createPrinter(): KlutterPrinter {
         )
 
         if(requiresRequestEncoder) {
-            append(
-                """
+            if(isProtobufEnabled) {
+                if(requestType?.dataType is EnumType) {
+                    append("import '../${requestType.dartType.toSnakeCase().replace("_", "")}.pbenum.dart';")
+                } else {
+                    append("import '../${requestType?.dartType?.toSnakeCase()?.replace("_", "")}.pb.dart';")
+                }
+            } else {
+                append(
+                    """
                 |import '../${requestType?.dartType?.toSnakeCase()}_dataclass.dart';
                 |import '../${requestType?.dartType?.toSnakeCase()}_extensions.dart';
                 """
-            )
+                )
+            }
         }
 
         if(requiresResponseDecoder) {
-            append(
-                """
+            if(isProtobufEnabled) {
+                if(responseType.dataType is EnumType) {
+                    append("import '../${responseType.dartType.toSnakeCase().replace("_", "")}.pbenum.dart';")
+                } else {
+                    append("import '../${responseType.dartType.toSnakeCase().replace("_", "")}.pb.dart';")
+                }
+            } else {
+                append(
+                    """
                 |import '../${responseType.dartType.toSnakeCase()}_dataclass.dart';
                 |import '../${responseType.dartType.toSnakeCase()}_extensions.dart';
                 """
-            )
+                )
+            }
         }
 
         append(
@@ -172,7 +202,15 @@ fun PublisherWidget.createPrinter(): KlutterPrinter {
         }
 
         if(requiresResponseDecoder) {
-            append("decode: (String json) => json.to${responseType.dataType.className},")
+            if(isProtobufEnabled) {
+                if(responseType.dataType is EnumType) {
+                    append("decodeBuffer: (List<int> buffer) => ${responseType.dataType.className}.valueOf(buffer[0])!,")
+                } else {
+                    append("decodeBuffer: (List<int> buffer) => ${responseType.dataType.className}.fromBuffer(buffer),")
+                }
+            } else {
+                append("decode: (String json) => json.to${responseType.dataType.className},")
+            }
         }
 
         append("""
@@ -211,7 +249,15 @@ fun PublisherWidget.createPrinter(): KlutterPrinter {
         }
 
         if(requiresResponseDecoder) {
-            append("decode: (String json) => json.to${responseType.dataType.className},")
+            if(isProtobufEnabled) {
+                if(responseType.dataType is EnumType) {
+                    append("decodeBuffer: (List<int> buffer) => ${responseType.dataType.className}.valueOf(buffer[0])!,")
+                } else {
+                    append("decodeBuffer: (List<int> buffer) => ${responseType.dataType.className}.fromBuffer(buffer),")
+                }
+            } else {
+                append("decode: (String json) => json.to${responseType.dataType.className},")
+            }
         }
 
         append("""
@@ -282,6 +328,8 @@ data class PublisherWidget(
      * ```
      */
     val method: FlutterMethod,
+
+    val isProtobufEnabled: Boolean,
 )
 
 /**

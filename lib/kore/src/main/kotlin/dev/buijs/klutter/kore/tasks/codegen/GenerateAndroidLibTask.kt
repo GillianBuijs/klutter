@@ -28,7 +28,7 @@ import dev.buijs.klutter.kore.project.*
 import dev.buijs.klutter.kore.templates.AndroidAdapter
 
 fun GenerateCodeOptions.toGenerateAndroidLibTask() =
-    GenerateAndroidLibTask(android = project.android, bindings = bindings)
+    GenerateAndroidLibTask(android = project.android, bindings = bindings, isProtobufEnabled = responseClassNames.isNotEmpty())
 
 /**
  * Generate the Android code in root/android.
@@ -36,6 +36,7 @@ fun GenerateCodeOptions.toGenerateAndroidLibTask() =
 class GenerateAndroidLibTask(
     private val android: Android,
     private val bindings: Map<Controller, List<FlutterChannel>>,
+    private val isProtobufEnabled: Boolean,
 ) : KlutterTask, GenerateCodeAction {
     override fun run() {
         android.pathToPlugin.maybeCreate().write(
@@ -44,6 +45,7 @@ class GenerateAndroidLibTask(
                 pluginPackageName = android.pluginPackageName,
                 methodChannels = bindings.values.flatten().filterIsInstance<FlutterSyncChannel>().map { it.name }.toSet(),
                 eventChannels = bindings.values.flatten().filterIsInstance<FlutterAsyncChannel>().map { it.name }.toSet(),
-                controllers = bindings.keys))
+                controllers = bindings.keys,
+                isProtobufEnabled = isProtobufEnabled))
     }
 }

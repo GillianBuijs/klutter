@@ -155,7 +155,7 @@ class ControllerScannerSpec extends Specification {
             it.data.class.simpleName == classType
             it.data.className == "SomeClass"
             it.data.packageName == "some.pack.age"
-            it.data.functions.size == 1
+            it.data.functions.size() == 1
             //noinspection GroovyAssignabilityCheck
             it.data.functions[0] == dummyMethod
         }
@@ -190,7 +190,7 @@ class ControllerScannerSpec extends Specification {
             it.data.class.simpleName == classType
             it.data.className == "SomeClass"
             it.data.packageName == "some.pack.age"
-            it.data.functions.size == 1
+            it.data.functions.size() == 1
             //noinspection GroovyAssignabilityCheck
             it.data.functions[0] == dummyMethod
         }

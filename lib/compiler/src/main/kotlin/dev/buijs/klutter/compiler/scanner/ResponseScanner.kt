@@ -24,11 +24,11 @@ package dev.buijs.klutter.compiler.scanner
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import dev.buijs.klutter.compiler.wrapper.*
-import dev.buijs.klutter.compiler.wrapper.KCResponse
-import dev.buijs.klutter.compiler.wrapper.toKCResponse
 import dev.buijs.klutter.kore.ast.*
 import dev.buijs.klutter.kore.common.Either
+import kotlinx.serialization.ExperimentalSerializationApi
 import java.io.File
+
 
 /**
  * FQDN for classes annotated with @Response.
@@ -39,10 +39,9 @@ private const val RESPONSE_ANNOTATION =
 /**
  * Get all classes with @Response annotation and convert them to [KCController].
  */
-private fun getSymbolsWithResponseAnnotation(resolver: Resolver): List<KCResponse> =
+private fun getSymbolsWithResponseAnnotation(resolver: Resolver): List<KSClassDeclaration> =
     resolver.getSymbolsWithAnnotation(RESPONSE_ANNOTATION)
         .filterIsInstance<KSClassDeclaration>()
-        .map { clazz -> clazz.toKCResponse() }
         .toList()
 
 /**
@@ -58,24 +57,59 @@ private fun getSymbolsWithResponseAnnotation(resolver: Resolver): List<KCRespons
 internal fun scanForResponses(
     outputFolder: File,
     resolver: Resolver,
-    scanner: (resolver: Resolver) -> List<KCResponse> = { getSymbolsWithResponseAnnotation(it) },
+    isProtobufEnabled: Boolean,
+    scanner: (resolver: Resolver) -> List<KCResponse> = {
+        getSymbolsWithResponseAnnotation(it).map { clazz -> clazz.toKCResponse() } },
 ): List<Either<String, SquintMessageSource>> =
     scanner.invoke(resolver)
-        .map { it.toSquintMessageSourceOrFail() }
+        .map { it.toSquintMessageSourceOrFail(isProtobufEnabled) }
         .mapIndexed { index, data -> data.writeOutput(outputFolder, index) }
         .toList()
 
-private fun KCResponse.toSquintMessageSourceOrFail()
+@JvmOverloads
+internal fun scanForResponsesProtobuf(
+    outputFolder: File,
+    resolver: Resolver,
+    scanner: (resolver: Resolver) -> List<KSClassDeclaration> = { getSymbolsWithResponseAnnotation(it) },
+): List<Either<String, String>> =
+    scanner.invoke(resolver)
+        .map { it.toSchemaSourceOrFail() }
+        .mapIndexed { index, data -> data.writeResponseFQDN(outputFolder, index) }
+        .toList()
+
+private fun KCResponse.toSquintMessageSourceOrFail(isProtobufEnabled: Boolean)
 : Either<String, SquintMessageSource> = when(this) {
     is KCEnumeration -> enumeration()
-    is KCMessage -> message()
+    is KCMessage -> message(isProtobufEnabled)
 }
 
-private fun KCMessage.message(): Either<String, SquintMessageSource> {
+private fun KSClassDeclaration.toSchemaSourceOrFail()
+: Either<String, String> {
+
+    val annotationNames = annotations
+        .map{ it.shortName.getShortName() }
+        .toList()
+
+    val isSerializableAnnotated =
+        annotationNames.contains("Serializable")
+
+    val className = "$this"
+    val packageName = packageName.asString()
+
+    if(!isSerializableAnnotated)
+        return Either.nok("Class is missing @Serializable annotation: $packageName.$className")
+
+    if(superTypes.map { it.toString() }.toList().contains("JSON"))
+        return Either.nok("Class extends JSON which is incompatible with Protobuf (remove JSON interface to fix): $packageName.$className")
+
+    return Either.ok("$packageName.$className")
+}
+
+private fun KCMessage.message(isProtobufEnabled: Boolean): Either<String, SquintMessageSource> {
     if(!isSerializableAnnotated)
         return missingSerializableAnnotation()
 
-    if(!extendsJSON)
+    if(!extendsJSON && !isProtobufEnabled)
         return doesNotExtendKlutterJSON()
 
     val validTypeMembers = typeMembers

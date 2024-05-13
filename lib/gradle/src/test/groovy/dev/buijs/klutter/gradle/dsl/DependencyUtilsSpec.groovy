@@ -21,7 +21,6 @@
  */
 package dev.buijs.klutter.gradle.dsl
 
-import dev.buijs.klutter.gradle.dsl.DependencyUtilsKt
 import spock.lang.Specification
 
 import java.nio.file.Files

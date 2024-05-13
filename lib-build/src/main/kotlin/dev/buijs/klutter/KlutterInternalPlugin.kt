@@ -38,7 +38,6 @@ object ProjectVersions {
     val kore = versions("kore.version")
     val bom = versions("bom.version")
     val annotations = versions("annotations.version")
-    val kradle = versions("kradle.version")
     val gradle = versions("plugin.gradle.version")
     val jetbrains = versions("plugin.jetbrains.version")
     val kompose = versions("kompose.version")

@@ -2,13 +2,19 @@ import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     kotlin("jvm")
-    id("org.jetbrains.dokka") version "1.6.10"
+    id("org.jetbrains.dokka") version "1.9.20"
     id("org.jetbrains.kotlinx.kover") version "0.5.1"
     id("klutter")
 }
 
 subprojects {
     plugins.apply("org.jetbrains.dokka")
+}
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 kover {
@@ -33,12 +39,6 @@ kover {
 
         // a test-only module
         ":lib-test",
-
-        // a test-only module
-        ":test-integration",
-
-        // for KSP testing only
-        ":test-ksp",
     )
 }
 
@@ -51,7 +51,7 @@ tasks.withType<DokkaTask>().configureEach {
 }
 
 tasks.dokkaHtmlMultiModule.configure {
-    outputDirectory.set(layout.buildDirectory.dir("dokkaSite").map { it.asFile })
+    outputDirectory.set(layout.buildDirectory.dir("dokkaSite"))
 }
 
 tasks.koverMergedXmlReport {
