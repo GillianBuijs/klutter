@@ -38,17 +38,17 @@ import java.io.File
 /**
  * The version of Klutter Gradle Executable Tool.
  */
-const val klutterBomVersion = "2023.3.1.beta"
+const val klutterBomVersion = "2024.1.1.beta"
 
 /**
  * The version of the klutter Pub Plugin.
  */
-const val klutterPubVersion = "2.0.0"
+const val klutterPubVersion = "2.1.0"
 
 /**
  * The version of the klutter-ui Pub Plugin.
  */
-const val klutterUIPubVersion = "1.0.1"
+const val klutterUIPubVersion = "1.1.0"
 
 /**
  * The version of the squint_json Pub Plugin.
@@ -66,6 +66,8 @@ val mapper = YAMLFactory.builder()
             .also {
                 it.registerKotlinModule()
                 it.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
+                it.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true)
+                it.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
                 it.setVisibility(it.serializationConfig.defaultVisibilityChecker
                         .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
                         .withGetterVisibility(JsonAutoDetect.Visibility.ANY)
@@ -110,7 +112,7 @@ fun Pubspec.iosClassName(orElse: String): String {
         ios == null -> {
             orElse
         }
-        ios!!.pluginClass == null -> {
+        ios!!.pluginClass.isNullOrBlank() -> {
             orElse
         }
         else -> {
@@ -124,7 +126,7 @@ fun Pubspec.androidClassName(orElse: String): String {
         android == null -> {
             orElse
         }
-        android!!.pluginClass == null -> {
+        android!!.pluginClass.isNullOrBlank() -> {
             orElse
         }
         else -> {

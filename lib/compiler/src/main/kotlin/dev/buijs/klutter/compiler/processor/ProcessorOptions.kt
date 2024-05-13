@@ -39,17 +39,18 @@ data class ProcessorOptions(
     val outputFolder: File,
     val flutterVersion: String,
     val generateAdapters: Boolean,
+    val isProtobufEnabled: Boolean,
 )
 
 /**
- * Possible options that can be set in the ksp DSL to configure
- * Klutter code scanning/generation.
+ * Possible options that can be set in the ksp DSL to configure Klutter code scanning/generation.
  */
 internal enum class ProcessorOption(val value: String) {
     PROJECT_FOLDER("klutterProjectFolder"),
     OUTPUT_FOLDER("klutterOutputFolder"),
     GENERATE_ADAPTERS("klutterGenerateAdapters"),
     FLUTTER_SDK_VERSION("flutterVersion"),
+    PROTOBUF_ENABLED("klutterProtobufEnabled")
 }
 
 /**
@@ -84,7 +85,8 @@ internal fun processorOptions(
         projectFolder = options.projectFolder(),
         outputFolder = outputFolder?.let { File(it) } ?: options.outputFolder(),
         generateAdapters = skipCodeGen?.let { !it } ?: options.boolean(GENERATE_ADAPTERS),
-        flutterVersion = flutterOrNull ?: options.flutterVersion()
+        flutterVersion = flutterOrNull ?: options.flutterVersion(),
+        isProtobufEnabled = options.boolean(PROTOBUF_ENABLED, defaultValue = false),
     ).also { kcLogger?.info("Determined Processor Options: $it") }
 }
 
@@ -142,5 +144,5 @@ private fun Map<String,String>.flutterVersion(): String {
 /**
  * Return option argument as boolean value or default to true if not set.
  */
-private fun Map<String,String>.boolean(option: ProcessorOption) =
-    this[option.value]?.let { it.trim().lowercase() == "true" } ?: true
+private fun Map<String,String>.boolean(option: ProcessorOption, defaultValue: Boolean = true) =
+    this[option.value]?.let { it.trim().lowercase() == "true" } ?: defaultValue

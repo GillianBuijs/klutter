@@ -34,6 +34,7 @@ import dev.buijs.klutter.kore.common.EitherNok
 import dev.buijs.klutter.kore.common.EitherOk
 import kotlin.sequences.Sequence
 import kotlin.sequences.SequencesKt
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -80,7 +81,7 @@ class ResponseScannerSpec extends Specification {
 
         when:
         def result = ResponseScannerKt
-                .scanForResponses(outputFolder, resolver, {classes })
+                .scanForResponses(outputFolder, resolver, false, {classes })
 
         then:
         with(result[0] as EitherNok) {
@@ -94,7 +95,7 @@ class ResponseScannerSpec extends Specification {
 
         when:
         def result = ResponseScannerKt
-                .scanForResponses(outputFolder, resolver, {classes })
+                .scanForResponses(outputFolder, resolver, false, {classes })
 
         then:
         with(result[0] as EitherNok) {
@@ -108,7 +109,7 @@ class ResponseScannerSpec extends Specification {
 
         when:
         def result = ResponseScannerKt
-                .scanForResponses(outputFolder, resolver, {classes })
+                .scanForResponses(outputFolder, resolver, false, {classes })
 
         then:
         with(result[0] as EitherNok) {
@@ -122,7 +123,7 @@ class ResponseScannerSpec extends Specification {
 
         when:
         def result = ResponseScannerKt
-                .scanForResponses(outputFolder, resolver, {classes })
+                .scanForResponses(outputFolder, resolver, false, {classes })
 
         then:
         with(result[0] as EitherNok) {
@@ -136,7 +137,7 @@ class ResponseScannerSpec extends Specification {
 
         when:
         def result = ResponseScannerKt
-                .scanForResponses(outputFolder, resolver, {classes })
+                .scanForResponses(outputFolder, resolver, false, {classes })
 
         then:
         with(result[0] as EitherNok) {
@@ -150,7 +151,7 @@ class ResponseScannerSpec extends Specification {
 
         when:
         def result = ResponseScannerKt
-                .scanForResponses(outputFolder, resolver, {classes })
+                .scanForResponses(outputFolder, resolver, false, {classes })
 
         then:
         with(result[0] as EitherOk) {
@@ -175,7 +176,7 @@ class ResponseScannerSpec extends Specification {
 
         when:
         def result = ResponseScannerKt
-                .scanForResponses(outputFolder, resolver, {classes })
+                .scanForResponses(outputFolder, resolver, false, {classes })
 
         then:
         with(result[0] as EitherNok) {
@@ -192,7 +193,7 @@ class ResponseScannerSpec extends Specification {
 
         when:
         def result = ResponseScannerKt
-                .scanForResponses(outputFolder, resolver, {classes })
+                .scanForResponses(outputFolder, resolver, false, {classes })
 
         then:
         with(result[0] as EitherOk) {
@@ -206,6 +207,8 @@ class ResponseScannerSpec extends Specification {
         }
     }
 
+    // TODO cannot mock a sealed interface
+    @Ignore
     def "When no callback is given, then default symbol-processor callback is used" () {
         given:
         Resolver resolver = Mock()

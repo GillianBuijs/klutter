@@ -28,6 +28,9 @@ val Version.prettyPrint: String
 val isWindows: Boolean
     get() = currentOperatingSystem == OperatingSystem.WINDOWS
 
+val isMacos: Boolean
+    get() = currentOperatingSystem == OperatingSystem.MACOS
+
 /**
  * Get current [OperatingSystem] from System Properties.
  *
@@ -45,7 +48,17 @@ val currentOperatingSystem: OperatingSystem
     }
 
 val currentArchitecture: Architecture
-    get() = """uname -m""".execute(Path.of("").toFile().absoluteFile).let { str ->
-        if(str.uppercase().contains("ARM")) Architecture.ARM64 else Architecture.X64
+    get() {
+        val sysctl = "sysctl -n sysctl.proc_translated" execute currentWorkingDirectory
+        val usesRosetta = sysctl == "1"
+        val architecture = """uname -m""" execute currentWorkingDirectory
+        val archContainsARM = architecture.uppercase().contains("ARM")
+        return when {
+            usesRosetta -> Architecture.ARM64
+            archContainsARM -> Architecture.ARM64
+            else -> Architecture.X64
+        }
     }
 
+val currentWorkingDirectory: File
+    get() = Path.of("").toFile().absoluteFile

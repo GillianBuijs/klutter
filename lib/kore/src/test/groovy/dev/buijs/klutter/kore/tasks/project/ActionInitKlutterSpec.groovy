@@ -76,7 +76,7 @@ class ActionInitKlutterSpec extends Specification {
     def setupSpec() {
         validRootFolder = Either.ok(root)
         validPluginName = Either.ok(pluginName)
-        config = new Config(new Dependencies(), "2023.x.y", null)
+        config = new Config(new Dependencies(), "2023.x.y", null, null)
         klutterYaml = root.toPath().resolve("my_plugin/kradle.yaml").toFile()
         plugin.mkdirs()
         example.mkdirs()

@@ -3,15 +3,21 @@ plugins {
     id("klutter")
     id("groovy")
     id("maven-publish")
-    id("java-library")
+    //id("java-library")
 }
 
-java {
-    withJavadocJar()
-    withSourcesJar()
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
+//java {
+//    withJavadocJar()
+//    withSourcesJar()
+//    sourceCompatibility = JavaVersion.VERSION_17
+//    targetCompatibility = JavaVersion.VERSION_17
+//}
+
+//kotlin {
+//    jvmToolchain {
+//        languageVersion.set(JavaLanguageVersion.of(17))
+//    }
+//}
 
 sourceSets {
     main {
@@ -37,14 +43,15 @@ dependencies {
 
     // KSP for annotation scanning
     implementation(kotlin("stdlib"))
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.8.20-1.0.11")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.10-1.0.13")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.6.2")
 
     // Jackson for XML and YAML
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.14.2")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.16.1")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.1")
 
     // Logging
     implementation("org.slf4j:slf4j-api:2.0.7")
@@ -137,6 +144,6 @@ fun Dependency.getLocalOrProjectVersion() = when(name) {
     "kore" ->
         dev.buijs.klutter.ProjectVersions.kore
     "kotlin-stdlib" ->
-        "1.7.10"
+        "1.9.22"
     else -> version
 }

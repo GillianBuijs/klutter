@@ -71,20 +71,15 @@ internal class InitKlutter(
         root.clearLibFolder()
         root.overwriteReadmeFile()
         root.copyLocalProperties()
-        "$flutter pub get" execute root
-        "$flutter pub get" execute exampleFolder
-        "$flutter pub run klutter:producer init bom=$bomVersion flutter=$flutterSDK" execute root
-        "$flutter pub run klutter:consumer init" execute exampleFolder
-        "$flutter pub run klutter:consumer add lib=$name" execute exampleFolder
+        println("$flutter pub get" execute root)
+        println("$flutter pub get" execute exampleFolder)
+        println("$flutter pub run klutter:kradle init bom=$bomVersion flutter=$flutterSDK" execute root)
+        println("$flutter pub run klutter:kradle add lib=$name" execute exampleFolder)
         exampleFolder.deleteIntegrationTestFolder()
 
-        // Do not bother setting up iOS on windows
-        if(isWindows) return
-        exampleFolder.deleteIosPodfileLock()
-        exampleFolder.deleteIosPods()
-        exampleFolder.deleteRunnerXCWorkspace()
-        "pod install" execute exampleFolder.resolve("ios")
-        "pod update" execute exampleFolder.resolve("ios")
+        // Only setup ios on macos.
+        if(isMacos)
+            println("$flutter pub run klutter:kradle init ios=13" execute exampleFolder)
     }
 
     /**
@@ -112,18 +107,6 @@ internal class InitKlutter(
      */
     private fun File.clearLibFolder() {
         resolve("lib").listFiles()?.forEach { it.deleteRecursively() }
-    }
-
-    private fun File.deleteIosPodfileLock() {
-        resolve("ios").resolve("Podfile.lock").delete()
-    }
-
-    private fun File.deleteIosPods() {
-        resolve("ios").resolve("Pods").deleteRecursively()
-    }
-
-    private fun File.deleteRunnerXCWorkspace() {
-        resolve("ios").resolve("Runner.xcworkspace").deleteRecursively()
     }
 
     /**

@@ -34,11 +34,6 @@ class Zippie(
     private val zipFile: File,
 
     /**
-     * Files which should be executable after unzipping.
-     */
-    private val executableFiles: Set<String>,
-
-    /**
      * Size of the buffer to read/write data
      */
     private val bufferSize: Int = 4096
@@ -74,12 +69,6 @@ class Zippie(
             }
         }
 
-        File(destFilePath).setExecutableIfApplicable()
-    }
-
-    private fun File.setExecutableIfApplicable() {
-        if(executableFiles.contains(nameWithoutExtension)) {
-            setExecutable(true)
-        }
+        File(destFilePath).setExecutable(true)
     }
 }

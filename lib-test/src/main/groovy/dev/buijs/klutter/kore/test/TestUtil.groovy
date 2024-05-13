@@ -19,7 +19,6 @@
  * SOFTWARE.
  *
  */
-
 package dev.buijs.klutter.kore.test
 
 class TestUtil {

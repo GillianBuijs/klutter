@@ -45,6 +45,7 @@ import java.awt.Graphics
 import javax.swing.JPanel
 
 private val knownKlutterBOMVersions = setOf(
+    "2024.1.1.beta",
     "2023.3.1.beta",
     "2023.2.2.beta",
     "2023.2.1.beta",
@@ -128,7 +129,7 @@ private fun newProjectPanel(data: NewProjectConfig, disposable: Disposable) = pa
     indent {
         row {
             // KLUTTER BANNER
-            cell(KlutterBanner).verticalAlign(VerticalAlign.CENTER)
+            cell(KlutterBanner).align(AlignY.CENTER)
         }
 
         val project = "Project"
@@ -138,7 +139,7 @@ private fun newProjectPanel(data: NewProjectConfig, disposable: Disposable) = pa
                 textField()
                     .bindText(data.appNameObservable)
                     .widthGroup(project)
-                    .horizontalAlign(HorizontalAlign.LEFT)
+                    .align(AlignX.LEFT)
                     .bindValidator(disposable) { input ->
                         if(toPluginName(input) is EitherNok) "The Plugin Name is not valid." else null
                     }
@@ -149,7 +150,7 @@ private fun newProjectPanel(data: NewProjectConfig, disposable: Disposable) = pa
                 textField()
                     .bindText(data.groupNameObservable)
                     .widthGroup(project)
-                    .horizontalAlign(HorizontalAlign.LEFT)
+                    .align(AlignX.LEFT)
                     .bindValidator(disposable) { input ->
                         if(toGroupName(input) is EitherNok) "The Group Name is not valid." else null
                     }
@@ -163,7 +164,7 @@ private fun newProjectPanel(data: NewProjectConfig, disposable: Disposable) = pa
                     .also { it.component.isEditable = true }
                     .widthGroup(dependencies)
                     .bindItem(data.gradleVersionObservable)
-                    .horizontalAlign(HorizontalAlign.LEFT)
+                    .align(AlignX.LEFT)
                     .bindValidator(disposable, isBlocking = false) { input ->
                         if(knownKlutterBOMVersions.none { it == input }) "The BOM Version is unknown." else null
                     }
@@ -172,13 +173,13 @@ private fun newProjectPanel(data: NewProjectConfig, disposable: Disposable) = pa
                 comboBox(items = flutterVersionsDescending(currentOperatingSystem).map { "${it.prettyPrintedString}" })
                     .widthGroup(dependencies)
                     .bindItem(data.flutterVersionObservable)
-                    .horizontalAlign(HorizontalAlign.LEFT)
+                    .align(AlignX.LEFT)
             }
             row {
                 checkBox("Get flutter dependencies from git.")
                     .widthGroup(dependencies)
                     .bindSelected(data.useGitForPubDependenciesObservable)
-                    .horizontalAlign(HorizontalAlign.LEFT)
+                    .align(AlignX.LEFT)
             }
 
             row {}.comment("If enabled then all flutter dependencies are pulled from git and not pub.")
@@ -267,10 +268,6 @@ private fun <T> observable(
     override fun get() = get.invoke()
 
     override fun afterChange(listener: (T) -> Unit) {
-        // nothing
-    }
-
-    override fun afterChange(listener: (T) -> Unit, parentDisposable: Disposable) {
         // nothing
     }
 

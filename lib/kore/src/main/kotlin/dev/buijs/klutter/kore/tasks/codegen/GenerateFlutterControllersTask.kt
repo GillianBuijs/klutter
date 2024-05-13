@@ -28,7 +28,10 @@ import dev.buijs.klutter.kore.templates.flutter.*
 import java.io.File
 
 fun GenerateCodeOptions.toGenerateControllersTask() =
-    GenerateFlutterControllersTask(srcFolder = flutterSrcFolder, bindings = bindings)
+    GenerateFlutterControllersTask(
+        srcFolder = flutterSrcFolder,
+        bindings = bindings,
+        isProtobufEnabled = responseClassNames.isNotEmpty())
 
 /**
  * Generate the Flutter (dart) code in root/lib folder of the plugin project.
@@ -36,6 +39,7 @@ fun GenerateCodeOptions.toGenerateControllersTask() =
 class GenerateFlutterControllersTask(
     private val srcFolder: File,
     private val bindings: Map<Controller, List<FlutterChannel>>,
+    private val isProtobufEnabled: Boolean,
 ) : KlutterTask, GenerateCodeAction {
 
     override fun run() {
@@ -44,12 +48,14 @@ class GenerateFlutterControllersTask(
                 is SimpleController ->
                     srcFolder.writeSimpleController(
                         controller = controller,
-                        channel = channels.firstSyncChannelOrNull()!!)
+                        channel = channels.firstSyncChannelOrNull()!!,
+                        isProtobufEnabled = isProtobufEnabled)
                 is BroadcastController ->
                     srcFolder.writeBroadcastController(
                         controller = controller,
                         asyncChannel = channels.firstAsyncChannelOrNull()!!,
-                        syncChannel = channels.firstSyncChannelOrNull())
+                        syncChannel = channels.firstSyncChannelOrNull(),
+                        isProtobufEnabled = isProtobufEnabled)
             }
         }
     }
@@ -65,7 +71,8 @@ private fun List<FlutterChannel>.firstAsyncChannelOrNull() =
 private fun File.writeBroadcastController(
     controller: BroadcastController,
     asyncChannel: FlutterAsyncChannel,
-    syncChannel: FlutterSyncChannel?
+    syncChannel: FlutterSyncChannel?,
+    isProtobufEnabled: Boolean,
 ) {
 
     val parentFolder = this
@@ -81,27 +88,30 @@ private fun File.writeBroadcastController(
             dataType = controller.response))
 
     controller.functions
-        .forEach { it.writePublisherWidget(parentFolder, syncChannel!!) }
+        .forEach { it.writePublisherWidget(parentFolder, syncChannel!!, isProtobufEnabled) }
 }
 
 private fun File.writeSimpleController(
     controller: SimpleController,
-    channel: FlutterSyncChannel
+    channel: FlutterSyncChannel,
+    isProtobufEnabled: Boolean,
 ) {
     val parentFolder =
         resolve(controller.className.toSnakeCase())
             .maybeCreateFolder()
 
     controller.functions
-        .forEach { it.writePublisherWidget(parentFolder, channel) }
+        .forEach { it.writePublisherWidget(parentFolder, channel, isProtobufEnabled) }
 }
 
 private fun Method.writePublisherWidget(
     parentFolder: File,
-    channel: FlutterSyncChannel
+    channel: FlutterSyncChannel,
+    isProtobufEnabled: Boolean,
 ) =  parentFolder.resolve("${method.toSnakeCase()}.dart")
     .also { it.createNewFile() }
     .write(PublisherWidget(
+        isProtobufEnabled = isProtobufEnabled,
         channel = channel,
         event = FlutterEvent(command),
         extension = FlutterExtension("${command.replaceFirstChar { it.uppercase() }}Event"),

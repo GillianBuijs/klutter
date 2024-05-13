@@ -28,7 +28,10 @@ import dev.buijs.klutter.kore.project.*
 import dev.buijs.klutter.kore.templates.IosAdapter
 
 fun GenerateCodeOptions.toGenerateIosLibTask() =
-    GenerateIosLibTask(ios = project.ios, bindings = bindings)
+    GenerateIosLibTask(
+        ios = project.ios,
+        bindings = bindings,
+        isProtobufEnabled = responseClassNames.isNotEmpty())
 
 /**
  * Generate the IOS code in root/ios.
@@ -36,6 +39,7 @@ fun GenerateCodeOptions.toGenerateIosLibTask() =
 class GenerateIosLibTask(
     private val ios: IOS,
     private val bindings: Map<Controller,List<FlutterChannel>>,
+    private val isProtobufEnabled: Boolean,
 ) : KlutterTask, GenerateCodeAction {
     override fun run() {
         ios.pathToPlugin.maybeCreate().write(
@@ -43,6 +47,7 @@ class GenerateIosLibTask(
                 pluginClassName = ios.pluginClassName,
                 methodChannels = bindings.values.flatten().filterIsInstance<FlutterSyncChannel>().map { it.name }.toSet(),
                 eventChannels = bindings.values.flatten().filterIsInstance<FlutterAsyncChannel>().map { it.name }.toSet(),
-                controllers = bindings.keys))
+                controllers = bindings.keys,
+                isProtobufEnabled = isProtobufEnabled))
     }
 }

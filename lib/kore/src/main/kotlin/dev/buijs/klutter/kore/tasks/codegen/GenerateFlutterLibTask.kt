@@ -28,7 +28,10 @@ import dev.buijs.klutter.kore.templates.flutter.PackageLib
 import java.io.File
 
 fun GenerateCodeOptions.toGenerateFlutterLibTask() =
-    GenerateFlutterLibTask(root = project.root, srcFolder = flutterSrcFolder, pluginName = pluginName)
+    GenerateFlutterLibTask(root = project.root,
+        srcFolder = flutterSrcFolder,
+        bomVersion = klutterBomVersion,
+        pluginName = pluginName)
 
 /**
  * Generate the Flutter (dart) code in root/lib folder of the plugin project.
@@ -37,13 +40,21 @@ class GenerateFlutterLibTask(
     private val root: Root,
     private val srcFolder: File,
     private val pluginName: String,
+    private val bomVersion: String,
 ) : KlutterTask, GenerateCodeAction {
 
     override fun run() {
+        // Update Klutter Gradle Plugin Version
+        root.kradleYaml.let { kradleYamlFile ->
+            kradleYamlFile.toConfigOrNull()
+                ?.copy(bomVersion = bomVersion)
+                ?.let { kradleYamlFile.writeText(mapper.writeValueAsString(it)) }
+        }
+
         root.pathToLibFile.maybeCreate().write(
             PackageLib(
                 name = pluginName,
-                exports = srcFolder.walkTopDown()
+                exports = srcFolder.verifyExists().walkTopDown()
                     .toList()
                     .filter { it.isFile }
                     .map { it.relativeTo(srcFolder) }

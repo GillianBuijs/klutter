@@ -51,6 +51,12 @@ inline fun <reified T: GenerateCodeAction> findGenerateCodeAction(
         options.toGenerateFlutterMessagesTask()
     PubGetTask::class.java ->
         options.toPubGetTask()
+    GenerateProtoSchemasTask::class.java ->
+        options.toGenerateProtoSchemaTask()
+    CompileProtoSchemaTask::class.java ->
+        options.toCompileProtoSchemaTask()
+    GenerateProtoExtensionsTask::class.java ->
+        options.toGenerateProtoExtensionsTask()
     else -> throw KlutterException("Unknown GenerateCodeAction: ${T::class.java}")
 }
 
@@ -58,6 +64,6 @@ fun runGenerateCodeActions(vararg action: GenerateCodeAction) {
     action.toList().forEach { it.run() }
 }
 
-sealed interface GenerateCodeAction {
+interface GenerateCodeAction {
     fun run()
 }

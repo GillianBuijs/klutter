@@ -29,12 +29,18 @@ import dev.buijs.klutter.kore.tasks.execute
 import java.io.File
 
 fun GenerateCodeOptions.toGenerateFlutterMessagesTask() =
-    GenerateFlutterMessagesTask(
-        root = project.root,
-        srcFolder = flutterSrcFolder,
-        flutterFolder = flutterFolder,
-        messages = messages,
-        log = log)
+    if(responseClassNames.isEmpty()) {
+        GenerateFlutterMessagesTask(
+            root = project.root,
+            srcFolder = flutterSrcFolder,
+            flutterFolder = flutterFolder,
+            messages = messages,
+            log = log)
+    } else {
+        object: GenerateCodeAction {
+            override fun run() { }
+        }
+    }
 
 /**
  * Generate the Flutter (dart) code in root/lib folder of the plugin project.

@@ -44,6 +44,12 @@ sealed class AbstractType {
 
     open val className: String =
         javaClass.simpleName
+
+    open val packageName: String =
+        javaClass.packageName
+
+    val fqdn: String
+        get() = "$packageName.$className"
 }
 
 /**
@@ -67,7 +73,7 @@ sealed class AbstractType {
  */
 open class CustomType(
     override val className: String,
-    open val packageName: String? = null,
+    override val packageName: String,
     val members: List<TypeMember> = emptyList()
 ): AbstractType() {
 
@@ -91,7 +97,7 @@ open class CustomType(
 
     override fun hashCode(): Int {
         var result = className.hashCode()
-        result = 31 * result + (packageName?.hashCode() ?: 0)
+        result = 31 * result + packageName.hashCode()
         result = 31 * result + members.hashCode()
         return result
     }
@@ -119,7 +125,7 @@ open class CustomType(
  */
 open class EnumType(
     override val className: String,
-    open val packageName: String? = null,
+    override val packageName: String ,
     val values: List<String> = emptyList(),
     val valuesJSON: List<String> = emptyList(),
 ): AbstractType() {
@@ -143,7 +149,7 @@ data class UndeterminedType(
  */
 class NullableCustomType(
     className: String,
-    packageName: String? = null,
+    packageName: String,
     fields: List<TypeMember> = emptyList()
 ): CustomType(
     className = className,
@@ -189,13 +195,13 @@ data class TypeMember(
 
 private fun CustomType.print() = this.javaClass.simpleName +
     "(className = $className, " +
-    "packageName = ${packageName ?: "NOT_FOUND"}, " +
+    "packageName = $packageName, " +
     "fields = ${members.map { "${it.name}: ${it.type.typeSimplename()}" }}, " +
     "nullable = ${this.javaClass.interfaces.map { i -> i.simpleName }.contains(object: Nullable {}.javaClass.simpleName)})"
 
 private fun EnumType.print() = this.javaClass.simpleName +
         "(className = $className, " +
-        "packageName = ${packageName ?: "NOT_FOUND"}, " +
+        "packageName = $packageName, " +
         "values = $values, " +
         "valuesJSON = $valuesJSON, " +
         "nullable = ${this.javaClass.interfaces.map { i -> i.simpleName }.contains(object: Nullable {}.javaClass.simpleName)})"

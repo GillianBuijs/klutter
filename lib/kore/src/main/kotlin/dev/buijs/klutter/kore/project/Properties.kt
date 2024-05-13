@@ -92,10 +92,20 @@ fun findSkipCodeGenInKradleEnvOrNull(content: String?) =
         }
     }
 
+fun findProtocDownloadURLInKradleEnvOrNull(content: String?) =
+    content.findPropertyOrNull("protoc.url")
+
 private fun String?.findPropertyInYamlOrNull(key: String) =
     this?.let { str ->
         """$key:\s*('|")\s*([^'"]+?)\s*('|")""".toRegex().find(str)?.let { match ->
             match.groupValues[2]
+        }
+    }
+
+private fun String?.findBooleanPropertyInYamlOrNull(key: String) =
+    this?.let { str ->
+        """$key:\s*([Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee])\s*""".toRegex().find(str)?.let { match ->
+            match.groupValues[1]
         }
     }
 

@@ -28,14 +28,14 @@ import com.google.devtools.ksp.processing.SymbolProcessorEnvironment
 import com.google.devtools.ksp.symbol.KSAnnotated
 import dev.buijs.klutter.compiler.scanner.scanForControllers
 import dev.buijs.klutter.compiler.scanner.scanForResponses
+import dev.buijs.klutter.compiler.scanner.scanForResponsesProtobuf
 import dev.buijs.klutter.compiler.validator.*
-import dev.buijs.klutter.compiler.validator.Invalid
-import dev.buijs.klutter.compiler.validator.InvalidSquintMessages
-import dev.buijs.klutter.compiler.validator.Valid
-import dev.buijs.klutter.compiler.validator.ValidSquintMessages
 import dev.buijs.klutter.compiler.wrapper.KCLogger
 import dev.buijs.klutter.kore.ast.Controller
+import dev.buijs.klutter.kore.ast.CustomType
 import dev.buijs.klutter.kore.ast.SquintMessageSource
+import dev.buijs.klutter.kore.common.EitherNok
+import dev.buijs.klutter.kore.common.EitherOk
 import dev.buijs.klutter.kore.common.ExcludeFromJacocoGeneratedReport
 import dev.buijs.klutter.kore.common.verifyExists
 import dev.buijs.klutter.kore.project.*
@@ -70,6 +70,13 @@ class Processor(
     private var messages: List<SquintMessageSource>? = null
     private var controllers: List<Controller>? = null
 
+    /**
+     * List of FQDN names for each @Response annotated class.
+     *
+     * If protobuf is NOT enabled then this list stays empty.
+     */
+    private var responseClassNames: List<String>? = null
+
     private val flutterFolder: FlutterDistributionFolderName
         get() {
             val os = currentOperatingSystem
@@ -90,9 +97,18 @@ class Processor(
             return folder
         }
 
+
     @ExcludeFromJacocoGeneratedReport
     override fun process(resolver: Resolver): List<KSAnnotated> {
         kcLogger = KCLogger(log, options.outputFolder)
+        kcLogger!!.logCompilerOptions(options)
+
+        responseClassNames = if(options.isProtobufEnabled) {
+            resolver.findAndValidateResponsesForProtobuf()
+        } else {
+            emptyList()
+        }
+
         messages = resolver.findAndValidateMessages()
         controllers = resolver.findAndValidateControllers()
         generateCodeAndInstall()
@@ -101,7 +117,7 @@ class Processor(
 
     @ExcludeFromJacocoGeneratedReport
     private fun Resolver.findAndValidateMessages() =
-        scanForResponses(resolver = this, outputFolder = options.outputFolder)
+        scanForResponses(resolver = this, outputFolder = options.outputFolder, isProtobufEnabled = options.isProtobufEnabled)
             .validateResponses().let {
                 when (it) {
                     is ValidSquintMessages -> it.data
@@ -112,12 +128,43 @@ class Processor(
                 }
             }
 
+    /**
+     * Returns the fully qualified class names of @Response annotated classes.
+     */
+    @ExcludeFromJacocoGeneratedReport
+    private fun Resolver.findAndValidateResponsesForProtobuf() =
+        scanForResponsesProtobuf(resolver = this, outputFolder = options.outputFolder)
+            .let { results ->
+                when {
+                    results.any { result -> result is EitherNok } -> {
+                        val warnings = results
+                            .filterIsInstance<EitherNok<String, String>>()
+                            .map { it.data }
+                        kcLogger?.logAnnotationScanningWarnings(warnings, "@Response")
+                        null
+                    }
+
+                    else -> results
+                        .filterIsInstance<EitherOk<String, String>>()
+                        .map { it.data }
+                }
+            }
+
     @ExcludeFromJacocoGeneratedReport
     private fun Resolver.findAndValidateControllers() =
         scanForControllers(
             resolver = this,
             outputFolder = options.outputFolder,
-            responses = messages?.map { it.type }?.toSet() ?: emptySet())
+            responses = messages
+                ?.map { it.type }
+                ?.toSet()
+                ?: responseClassNames
+                    ?.map { CustomType(
+                        className = it.substringAfterLast("."),
+                        packageName = it.substringBeforeLast("."))
+                    }
+                    ?.toSet()
+                ?: emptySet())
             .validateControllers(messages?.map { it.type } ?: emptyList()).let {
                 when (it) {
                     is Valid -> it.data
@@ -128,12 +175,19 @@ class Processor(
                 }
             }
 
+
     @ExcludeFromJacocoGeneratedReport
     private fun generateCodeAndInstall() {
         // If null then there are validation errors and code generation should be skipped
-        if (messages == null || controllers == null) return
+        if (messages == null || controllers == null || responseClassNames == null) return
 
-        kcLogger?.logSquintInfo(project, messages!!.size, controllers!!.size)
+        val responsesCount = if(messages!!.isEmpty()) {
+            responseClassNames!!.size
+        } else {
+            messages!!.size
+        }
+
+        kcLogger?.logDartCodeGenInfo(project, responsesCount, controllers!!.size)
 
         val codegenOptions = GenerateCodeOptions(
             project = project,
@@ -141,6 +195,7 @@ class Processor(
             excludeArmArcFromPodspec = currentArchitecture == Architecture.X64,
             controllers = controllers!!,
             messages = messages!!,
+            responseClassNames = responseClassNames!!,
             flutterFolder = flutterFolder,
             log = { str -> kcLogger?.info("Running dart command:\n$str") })
 
@@ -158,11 +213,23 @@ private fun KCLogger.logAnnotationScanningWarnings(warnings: List<String>, annot
 }
 
 @ExcludeFromJacocoGeneratedReport
-private fun KCLogger.logSquintInfo(project: Project, messageCount: Int, controllerCount: Int) {
+private fun KCLogger.logDartCodeGenInfo(project: Project, responseCount: Int, controllerCount: Int) {
     info("=============================================================")
     info("Generating dart code")
     info("Root folder: ${project.root.folder.absolutePath}")
-    info("Response count: $messageCount")
+    info("Response count: $responseCount")
     info("Controller count: $controllerCount")
+    info("=============================================================")
+}
+
+@ExcludeFromJacocoGeneratedReport
+private fun KCLogger.logCompilerOptions(options: ProcessorOptions) {
+    info("=============================================================")
+    info("Compiler Options")
+    info("Project folder: ${options.projectFolder}")
+    info("Output folder: ${options.outputFolder}")
+    info("Flutter version: ${options.flutterVersion}")
+    info("Adapter codegen isEnabled: ${options.generateAdapters}")
+    info("Protobuf isEnabled: ${options.isProtobufEnabled}")
     info("=============================================================")
 }

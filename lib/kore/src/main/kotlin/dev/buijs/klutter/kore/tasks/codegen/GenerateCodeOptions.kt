@@ -35,6 +35,11 @@ data class GenerateCodeOptions(
     val excludeArmArcFromPodspec: Boolean,
     val controllers: List<Controller>,
     val messages: List<SquintMessageSource>,
+
+    /**
+     * List of FQDN Responses for which protobuf schemas should be generated.
+     */
+    val responseClassNames: List<String>,
     val log: (String) -> Unit = {  },
 ) {
 

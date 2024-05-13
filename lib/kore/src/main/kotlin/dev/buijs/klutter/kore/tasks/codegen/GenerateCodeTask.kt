@@ -44,7 +44,8 @@ class GenerateCodeTask(
             findGenerateCodeAction<DartFormatTask>(options),
             findGenerateCodeAction<ExcludeArm64Task>(options),
             findGenerateCodeAction<GenerateIosLibTask>(options),
-            findGenerateCodeAction<GenerateAndroidLibTask>(options))
+            findGenerateCodeAction<GenerateAndroidLibTask>(options),
+            findGenerateCodeAction<GenerateProtoExtensionsTask>(options))
     }
 
 }

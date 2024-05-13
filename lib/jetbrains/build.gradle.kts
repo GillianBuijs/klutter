@@ -1,7 +1,7 @@
 import org.jetbrains.changelog.date
 
 plugins {
-    id("org.jetbrains.intellij") version "1.13.3"
+    id("org.jetbrains.intellij") version "1.17.3"
     id("org.jetbrains.changelog") version "2.0.0"
     id("java")
     id("maven-publish")
@@ -23,7 +23,7 @@ group = "dev.buijs.klutter"
 version = dev.buijs.klutter.ProjectVersions.jetbrains
 
 intellij {
-    version.set("2022.3.2")
+    version.set("2023.2")
     type.set("IC") // Intellij Community Edition
     plugins.set(listOf("java", "com.intellij.gradle","android"))
 }
@@ -51,22 +51,13 @@ changelog {
 
 tasks {
 
-    withType<JavaCompile> {
-        sourceCompatibility = "17"
-        targetCompatibility = "17"
-    }
-
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
-
     withType<Test> {
         useJUnitPlatform()
     }
 
     patchPluginXml {
-        sinceBuild.set("223")
-        untilBuild.set("232.*")
+        sinceBuild.set("232")
+        //untilBuild.set("232.*")
     }
 
     signPlugin {
@@ -122,8 +113,8 @@ dependencies {
     @Suppress("GradleDependency") // 30-07-2022 newest 3.4.2 throws exceptions
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.0")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
 
     // Plugin UI Test
     testImplementation("com.intellij.remoterobot:remote-robot:$robotVersion")

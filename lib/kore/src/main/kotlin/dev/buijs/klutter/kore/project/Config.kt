@@ -34,6 +34,7 @@ private val log = KotlinLogging.logger { }
 @JsonPropertyOrder(
     "bom-version",
     "flutter-version",
+    "feature-protobuf-enabled",
     "dependencies")
 data class Config(
     @JsonProperty("dependencies")
@@ -44,6 +45,9 @@ data class Config(
 
     @JsonProperty("flutter-version")
     val flutterVersion: String? = null,
+
+    @JsonProperty("feature-protobuf-enabled")
+    val featureProtobufEnabled: Boolean? = null,
 )
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
