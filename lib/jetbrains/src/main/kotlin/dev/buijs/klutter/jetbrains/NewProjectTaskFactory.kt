@@ -26,6 +26,7 @@ import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
 import dev.buijs.klutter.kore.project.*
+import dev.buijs.klutter.kore.tasks.execute
 import dev.buijs.klutter.kore.tasks.executor
 import dev.buijs.klutter.kore.tasks.project.*
 import mu.KotlinLogging
@@ -67,6 +68,7 @@ private fun createKlutterPluginTask(
             executor = JetbrainsExecutor()
             task.run()
             rootFolder.moveUpFolder(options.pluginName.validPluginNameOrThrow())
+            "./gradlew klutterGetKradle -p platform" execute rootFolder
         })
 }
 

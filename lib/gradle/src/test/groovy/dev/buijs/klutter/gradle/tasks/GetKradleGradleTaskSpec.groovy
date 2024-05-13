@@ -19,39 +19,25 @@
  * SOFTWARE.
  *
  */
-package dev.buijs.klutter.jetbrains
+package dev.buijs.klutter.gradle.tasks
 
-import com.intellij.openapi.util.IconLoader
-import dev.buijs.klutter.kore.common.ExcludeFromJacocoGeneratedReport
-import javax.swing.Icon
+import spock.lang.Ignore
+import spock.lang.Specification
 
-/**
- * Common text messages.
- */
-@ExcludeFromJacocoGeneratedReport
-object KlutterBundle {
+import static dev.buijs.klutter.gradle.tasks.TaskTestUtil.getTask
 
-    const val moduleId: String = "KLUTTER_MODULE"
+class GetKradleGradleTaskSpec extends Specification {
 
-    const val bundleId: String = "buijs_software_klutter"
+    // does not work in ci yet ...
+    @Ignore
+    def "Verify getKradleTask works"() {
+        def task = getTask(GetKradleGradleTask)
 
-    const val presentableName: String = "Klutter"
+        when:
+        task.execute()
 
-    const val groupName: String = "Klutter Framework"
+        then: "No exception is thrown"
+        1 == 1
+    }
 
-    const val descriptionShort: String = "Add support for the Klutter Framework"
-
-    const val descriptionLong: String = "" +
-            "Klutter is a framework which interconnects Flutter and Kotlin Multiplatform. " +
-            "It can be used to create Flutter plugins or standalone apps."
-
-}
-
-/**
- * Klutter Logo's in Icon format.
- */
-@ExcludeFromJacocoGeneratedReport
-object KlutterIcons {
-    val logo16x16: Icon = IconLoader.getIcon("/pluginIcon16x16.svg", KlutterIcons::class.java)
-    val logo20x20: Icon = IconLoader.getIcon("/pluginIcon20x20.svg", KlutterIcons::class.java)
 }

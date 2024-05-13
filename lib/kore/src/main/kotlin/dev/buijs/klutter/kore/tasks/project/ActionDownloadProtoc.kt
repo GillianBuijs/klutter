@@ -30,11 +30,6 @@ import java.net.URL
 import java.nio.channels.Channels
 import java.nio.file.Files
 
-/**
- * Files which should be executable.
- */
-private val executableFiles = setOf("protoc")
-
 internal class DownloadProtoc(
     private val rootFolder: File,
     private val overwrite: Boolean = false,
@@ -59,7 +54,7 @@ internal class DownloadProtoc(
         // Make sure cache exists in the user home.
         initKradleCache()
         if(target.exists()) target.deleteRecursively()
-        Zippie(zip, executableFiles).unzipTo(target.absolutePath)
+        Zippie(zip).unzipTo(target.absolutePath)
         zip.deleteRecursively()
     }
 

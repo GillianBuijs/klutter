@@ -46,6 +46,8 @@ enum class KlutterGradleTaskName(private val identifier: String) {
 
     GetProtoc("GetProtoc"),
 
+    GetKradle("GetKradle"),
+
     CompileProtoSchemas("CompileProtoSchemas");
 
     val taskName: String

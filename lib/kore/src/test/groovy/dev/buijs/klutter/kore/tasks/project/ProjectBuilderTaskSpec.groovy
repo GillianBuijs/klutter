@@ -84,13 +84,16 @@ class ProjectBuilderTaskSpec extends Specification {
     def flutterPubGet = flutterExe + " pub get"
 
     @Shared
-    def klutterProducerInit = flutterExe + " pub run klutter:producer init bom=2024.1.1.beta flutter=3.0.5.macos.arm64"
+    def klutterProducerInit = flutterExe + " pub run klutter:kradle init bom=2024.1.1.beta flutter=3.0.5.macos.arm64"
 
     @Shared
-    def klutterConsumerInit = flutterExe + " pub run klutter:consumer init"
+    def klutterConsumerInit = flutterExe + " pub run klutter:kradle init"
 
     @Shared
-    def klutterConsumerAdd = flutterExe + " pub run klutter:consumer add lib=my_awesome_plugin"
+    def klutterConsumerInitIOS = flutterExe + " pub run klutter:kradle init ios=13"
+
+    @Shared
+    def klutterConsumerAdd = flutterExe + " pub run klutter:kradle add lib=my_awesome_plugin"
 
     @Shared
     def iosPodUpdate = "pod update"
@@ -126,6 +129,7 @@ class ProjectBuilderTaskSpec extends Specification {
         executor.putExpectation(pathToExample, flutterPubGet)
         executor.putExpectation(pathToPlugin, klutterProducerInit)
         executor.putExpectation(pathToExample, klutterConsumerInit)
+        executor.putExpectation(pathToExample, klutterConsumerInitIOS)
         executor.putExpectation(pathToExample, klutterConsumerAdd)
         executor.putExpectation(pathToExampleIos, iosPodUpdate)
         executor.putExpectation(pathToExampleIos, iosPodInstall)

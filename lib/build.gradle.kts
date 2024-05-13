@@ -39,12 +39,6 @@ kover {
 
         // a test-only module
         ":lib-test",
-
-        // a test-only module
-        ":test-integration",
-
-        // for KSP testing only
-        ":test-ksp",
     )
 }
 

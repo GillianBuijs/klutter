@@ -31,11 +31,6 @@ import java.nio.file.Files
 
 internal var dryRun = false
 
-/**
- * Files which should be executable.
- */
-private val executableFiles = setOf("flutter", "dart", "impellerc")
-
 internal fun ProjectBuilderOptions.toDowloadFlutterTask() =
     DownloadFlutter(flutterDistributionString.flutterDistribution)
 
@@ -69,7 +64,7 @@ internal class DownloadFlutter(
         // Make sure cache exists in the user home.
         initKradleCache()
         if(target.exists()) target.deleteRecursively()
-        Zippie(zip, executableFiles).unzipTo(target.absolutePath)
+        Zippie(zip).unzipTo(target.absolutePath)
         zip.deleteRecursively()
     }
 

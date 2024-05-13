@@ -1,7 +1,7 @@
 import org.jetbrains.changelog.date
 
 plugins {
-    id("org.jetbrains.intellij") version "1.13.3"
+    id("org.jetbrains.intellij") version "1.17.3"
     id("org.jetbrains.changelog") version "2.0.0"
     id("java")
     id("maven-publish")
@@ -22,19 +22,8 @@ val robotVersion = "0.11.16"
 group = "dev.buijs.klutter"
 version = dev.buijs.klutter.ProjectVersions.jetbrains
 
-//java {
-//    sourceCompatibility = JavaVersion.VERSION_17
-//    targetCompatibility = JavaVersion.VERSION_17
-//}
-
-//kotlin {
-//    jvmToolchain {
-//        languageVersion.set(JavaLanguageVersion.of(13))
-//    }
-//}
-
 intellij {
-    version.set("2022.3.2")
+    version.set("2023.2")
     type.set("IC") // Intellij Community Edition
     plugins.set(listOf("java", "com.intellij.gradle","android"))
 }
@@ -62,22 +51,13 @@ changelog {
 
 tasks {
 
-//    withType<JavaCompile> {
-//        sourceCompatibility = "13"
-//        targetCompatibility = "13"
-//    }
-//
-//    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-//        kotlinOptions.jvmTarget = "13"
-//    }
-
     withType<Test> {
         useJUnitPlatform()
     }
 
     patchPluginXml {
-        sinceBuild.set("223")
-        untilBuild.set("232.*")
+        sinceBuild.set("232")
+        //untilBuild.set("232.*")
     }
 
     signPlugin {

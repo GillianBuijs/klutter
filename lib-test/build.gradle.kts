@@ -34,7 +34,7 @@ sourceSets {
 
 dependencies {
     //Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
     implementation("org.jetbrains.kotlin:kotlin-compiler:1.7.10")
 
     //Jackson for XML
