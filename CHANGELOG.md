@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v2024.1.3.beta
+- Use klutter (dart) 3.0.2.
+
+## v2024.1.2.beta
+- Bugfix: Typo in the Swift Plugin template.
+- Use klutter (dart) 3.0.1.
+
 ## v2024.1.1.beta
 - Remove kradle module from project (kradle is the default executable since [kradle](..%2Fklutter-dart%2Fkradle) 3.0.0).
 - Add support for protocol buffers.
@@ -15,7 +22,7 @@
 
 ## v2023.2.1.beta
 - Remove example/integration_test folder on project init.
-- Bugfix: Eventsink received incorrect variable on error.
+- Bugfix: EventSink received incorrect variable on error.
 - Uses [klutter-dart](https://pub.dev/packages/klutter) version 1.0.0.
 - Uses [klutter-dart-ui](https://pub.dev/packages/klutter_ui) version 1.0.0.
 

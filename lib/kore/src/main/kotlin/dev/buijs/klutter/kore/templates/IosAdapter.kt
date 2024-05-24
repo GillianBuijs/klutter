@@ -173,7 +173,7 @@ class IosAdapter(
                 """|    func ${command}(data: Any?, result: @escaping FlutterResult) {
                    |        $instanceOrConstuctor.${method.removeSuffix("()")} { maybeData, error in
                    |            if let value = maybeData { 
-                   |                $responseEncoder 
+                   |                result($responseEncoder)
                    |            }
                    |
                    |            if let failure = error { result(failure) }
@@ -185,7 +185,7 @@ class IosAdapter(
             listOf(
                 """|    func ${command}(data: Any?, result: @escaping FlutterResult) {
                     |       let value = $instanceOrConstuctor.$method()
-                   |        $responseEncoder
+                   |        result($responseEncoder)
                    |    }
                    |    
                 """.trimMargin())
@@ -360,7 +360,7 @@ class IosAdapter(
 
     private fun AbstractType.responseEncoder(): String {
         return when {
-            this is StandardType -> "result(value)"
+            this is StandardType -> "value"
             isProtobufEnabled ->
                 """|let bytes = value.encode${className}ToByteArray()
                     |       var array = [UInt8]()
@@ -370,7 +370,7 @@ class IosAdapter(
                     |       }
                     |       result(FlutterStandardTypedData(bytes: Data(array)))
                 """.trimMargin()
-            else -> "result(TypeHandlerKt.encode(value))"
+            else -> "TypeHandlerKt.encode(value)"
         }
     }
 
