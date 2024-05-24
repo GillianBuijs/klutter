@@ -38,12 +38,12 @@ import java.io.File
 /**
  * The version of Klutter Gradle Executable Tool.
  */
-const val klutterBomVersion = "2024.1.1.beta"
+const val klutterBomVersion = "2024.1.3.beta"
 
 /**
  * The version of the klutter Pub Plugin.
  */
-const val klutterPubVersion = "2.1.0"
+const val klutterPubVersion = "3.0.2"
 
 /**
  * The version of the klutter-ui Pub Plugin.

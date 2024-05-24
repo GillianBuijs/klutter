@@ -33,8 +33,6 @@ import com.intellij.openapi.ui.ValidationInfo
 import com.intellij.openapi.util.IconLoader
 import com.intellij.ui.components.JBTextField
 import com.intellij.ui.dsl.builder.*
-import com.intellij.ui.dsl.gridLayout.HorizontalAlign
-import com.intellij.ui.dsl.gridLayout.VerticalAlign
 import dev.buijs.klutter.kore.KlutterException
 import dev.buijs.klutter.kore.common.EitherNok
 import dev.buijs.klutter.kore.project.*
@@ -45,6 +43,8 @@ import java.awt.Graphics
 import javax.swing.JPanel
 
 private val knownKlutterBOMVersions = setOf(
+    "2024.1.3.beta",
+    "2024.1.2.beta",
     "2024.1.1.beta",
     "2023.3.1.beta",
     "2023.2.2.beta",

@@ -91,7 +91,7 @@ class GenerateCodeTaskSpec extends Specification {
     def flutterPubGet = flutterExe + " pub get"
 
     @Shared
-    def klutterProducerInit = flutterExe + " pub run klutter:kradle init bom=2024.1.1.beta flutter=3.0.5.macos.arm64"
+    def klutterProducerInit = flutterExe + " pub run klutter:kradle init bom=2024.1.3.beta flutter=3.0.5.macos.arm64"
 
     @Shared
     def klutterConsumerInit = flutterExe + " pub run klutter:kradle init"
@@ -274,7 +274,7 @@ dependencies:
     squint_json: ^0.1.2
     klutter_ui: ^1.1.0
 dev_dependencies:
-    klutter: ^2.1.0
+    klutter: ^3.0.2
 flutter:
   plugin:
     platforms:
@@ -306,7 +306,7 @@ dev_dependencies:
     flutter_test:
         sdk: flutter
 
-    klutter: ^2.1.0
+    klutter: ^3.0.2
 flutter:
     uses-material-design: true
 """

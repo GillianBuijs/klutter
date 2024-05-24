@@ -1,4 +1,10 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
+## [2024.1.2]
+
+### Changed
+- Uses klutter 2024.1.2.beta.
+- Uses klutter (dart) [3.0.1](https://pub.dev/packages/klutter).
+
 ## [2024.1.1]
 
 ### Changed
@@ -33,8 +39,3 @@
 - Uses squint_json (dart) [0.1.2](https://pub.dev/packages/squint_json).
 - Add option to get pub dependencies (see above) from git develop branches instead.
 - Add option to input klutter bom version.
-
-## [0.2.4]
-
-### Added
-- Initial version.
