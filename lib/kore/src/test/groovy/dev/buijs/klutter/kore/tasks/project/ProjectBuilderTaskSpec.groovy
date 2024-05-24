@@ -272,7 +272,6 @@ class ProjectBuilderTaskSpec extends Specification {
                 dev_dependencies:
                     flutter_test:
                         sdk: flutter
-                
                     klutter: ^3.0.2
                 flutter:
                     uses-material-design: true
