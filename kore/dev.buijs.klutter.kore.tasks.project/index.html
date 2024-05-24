@@ -1,0 +1,313 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>dev.buijs.klutter.kore.tasks.project</title>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+<a class="library-name--link" href="../../index.html">
+                            lib
+                    </a>            </div>
+            <div class="library-version">
+            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":lib:kore:dokkaHtmlPartial/main">jvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="package" id="content" pageids="kore::dev.buijs.klutter.kore.tasks.project////PointingToDeclaration//-1794231652">
+  <div class="breadcrumbs"><a href="../index.html">kore</a><span class="delimiter">/</span><span class="current">dev.buijs.klutter.kore.tasks.project</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="-1036708528%2FClasslikes%2F-1794231652" anchor-label="DownloadFlutterTask" id="-1036708528%2FClasslikes%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-download-flutter-task/index.html"><span>Download</span><wbr><span>Flutter</span><wbr><span><span>Task</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1036708528%2FClasslikes%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-download-flutter-task/index.html">DownloadFlutterTask</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">flutter<span class="token operator">: </span><a href="../dev.buijs.klutter.kore.project/-flutter-distribution/index.html">FlutterDistribution</a><span class="token punctuation">, </span></span><span class="parameter ">overwrite<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">target<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html">File</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="../dev.buijs.klutter.kore/-klutter-task/index.html">KlutterTask</a></div><div class="brief "><p class="paragraph">Task to download a compatible Flutter distribution.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1666128392%2FClasslikes%2F-1794231652" anchor-label="FlutterPath" id="1666128392%2FClasslikes%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-flutter-path/index.html"><span>Flutter</span><wbr><span><span>Path</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1666128392%2FClasslikes%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="-flutter-path/index.html">FlutterPath</a><span class="token operator"> = </span><a href="../dev.buijs.klutter.kore.common/-either/index.html">Either</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html">File</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="550447327%2FClasslikes%2F-1794231652" anchor-label="GroupName" id="550447327%2FClasslikes%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-group-name/index.html"><span>Group</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="550447327%2FClasslikes%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="-group-name/index.html">GroupName</a><span class="token operator"> = </span><a href="../dev.buijs.klutter.kore.common/-either/index.html">Either</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2091836795%2FClasslikes%2F-1794231652" anchor-label="PluginName" id="2091836795%2FClasslikes%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-plugin-name/index.html"><span>Plugin</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2091836795%2FClasslikes%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="-plugin-name/index.html">PluginName</a><span class="token operator"> = </span><a href="../dev.buijs.klutter.kore.common/-either/index.html">Either</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-348766003%2FClasslikes%2F-1794231652" anchor-label="ProjectBuilderOptions" id="-348766003%2FClasslikes%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-project-builder-options/index.html"><span>Project</span><wbr><span>Builder</span><wbr><span><span>Options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-348766003%2FClasslikes%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-project-builder-options/index.html">ProjectBuilderOptions</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>rootFolder<span class="token operator">: </span><a href="-root-folder/index.html">RootFolder</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pluginName<span class="token operator">: </span><a href="-plugin-name/index.html">PluginName</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>groupName<span class="token operator">: </span><a href="-group-name/index.html">GroupName</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>flutterDistributionString<span class="token operator">: </span><a href="../dev.buijs.klutter.kore.project/-flutter-distribution-folder-name/index.html">FlutterDistributionFolderName</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>config<span class="token operator">: </span><a href="../dev.buijs.klutter.kore.project/-config/index.html">Config</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1302908690%2FClasslikes%2F-1794231652" anchor-label="ProjectBuilderTask" id="1302908690%2FClasslikes%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-project-builder-task/index.html"><span>Project</span><wbr><span>Builder</span><wbr><span><span>Task</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1302908690%2FClasslikes%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-project-builder-task/index.html">ProjectBuilderTask</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">options<span class="token operator">: </span><a href="-project-builder-options/index.html">ProjectBuilderOptions</a></span></span><span class="token punctuation">)</span> : <a href="../dev.buijs.klutter.kore/-klutter-task/index.html">KlutterTask</a></div><div class="brief "><p class="paragraph">Task to generate a klutter plugin project.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="357458473%2FClasslikes%2F-1794231652" anchor-label="RootFolder" id="357458473%2FClasslikes%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-root-folder/index.html"><span>Root</span><wbr><span><span>Folder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="357458473%2FClasslikes%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="-root-folder/index.html">RootFolder</a><span class="token operator"> = </span><a href="../dev.buijs.klutter.kore.common/-either/index.html">Either</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html">File</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-854228200%2FFunctions%2F-1794231652" anchor-label="inputOrThrow" id="-854228200%2FFunctions%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="input-or-throw.html"><span>input</span><wbr><span>Or</span><wbr><span><span>Throw</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-854228200%2FFunctions%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="input-or-throw.html">T</a><span class="token punctuation">, </span><a href="input-or-throw.html">R</a><span class="token operator">&gt; </span><a href="../dev.buijs.klutter.kore.common/-either/index.html">Either</a><span class="token operator">&lt;</span><a href="input-or-throw.html">T</a><span class="token punctuation">, </span><a href="input-or-throw.html">R</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="input-or-throw.html"><span class="token function">inputOrThrow</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">ok<span class="token operator">: </span><span class="token punctuation">(</span><a href="../dev.buijs.klutter.kore.common/-either-ok/index.html">EitherOk</a><span class="token operator">&lt;</span><a href="input-or-throw.html">T</a><span class="token punctuation">, </span><a href="input-or-throw.html">R</a><span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="input-or-throw.html">R</a><span class="token punctuation">, </span></span><span class="parameter ">nok<span class="token operator">: </span><span class="token punctuation">(</span><a href="../dev.buijs.klutter.kore.common/-either-nok/index.html">EitherNok</a><span class="token operator">&lt;</span><a href="input-or-throw.html">T</a><span class="token punctuation">, </span><a href="input-or-throw.html">R</a><span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="input-or-throw.html">R</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1296717622%2FFunctions%2F-1794231652" anchor-label="toFlutterPath" id="1296717622%2FFunctions%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-flutter-path.html"><span>to</span><wbr><span>Flutter</span><wbr><span><span>Path</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1296717622%2FFunctions%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="to-flutter-path.html"><span class="token function">toFlutterPath</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../dev.buijs.klutter.kore.common/-either/index.html">Either</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html">File</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2146437313%2FFunctions%2F-1794231652" anchor-label="toGroupName" id="-2146437313%2FFunctions%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-group-name.html"><span>to</span><wbr><span>Group</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2146437313%2FFunctions%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="to-group-name.html"><span class="token function">toGroupName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../dev.buijs.klutter.kore.common/-either/index.html">Either</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-799489193%2FFunctions%2F-1794231652" anchor-label="toPluginName" id="-799489193%2FFunctions%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-plugin-name.html"><span>to</span><wbr><span>Plugin</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-799489193%2FFunctions%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="to-plugin-name.html"><span class="token function">toPluginName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../dev.buijs.klutter.kore.common/-either/index.html">Either</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1686229353%2FFunctions%2F-1794231652" anchor-label="toRootFolder" id="1686229353%2FFunctions%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-root-folder.html"><span>to</span><wbr><span>Root</span><wbr><span><span>Folder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1686229353%2FFunctions%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="to-root-folder.html"><span class="token function">toRootFolder</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../dev.buijs.klutter.kore.common/-either/index.html">Either</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html">File</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-289673281%2FFunctions%2F-1794231652" anchor-label="validGroupNameOrThrow" id="-289673281%2FFunctions%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="valid-group-name-or-throw.html"><span>valid</span><wbr><span>Group</span><wbr><span>Name</span><wbr><span>Or</span><wbr><span><span>Throw</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-289673281%2FFunctions%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-group-name/index.html">GroupName</a><span class="token punctuation">.</span><a href="valid-group-name-or-throw.html"><span class="token function">validGroupNameOrThrow</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="249673761%2FFunctions%2F-1794231652" anchor-label="validPluginNameOrThrow" id="249673761%2FFunctions%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="valid-plugin-name-or-throw.html"><span>valid</span><wbr><span>Plugin</span><wbr><span>Name</span><wbr><span>Or</span><wbr><span><span>Throw</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="249673761%2FFunctions%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-plugin-name/index.html">PluginName</a><span class="token punctuation">.</span><a href="valid-plugin-name-or-throw.html"><span class="token function">validPluginNameOrThrow</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1695471055%2FFunctions%2F-1794231652" anchor-label="validRootFolderOrThrow" id="-1695471055%2FFunctions%2F-1794231652" data-filterable-set=":lib:kore:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":lib:kore:dokkaHtmlPartial/main" data-filterable-set=":lib:kore:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="valid-root-folder-or-throw.html"><span>valid</span><wbr><span>Root</span><wbr><span>Folder</span><wbr><span>Or</span><wbr><span><span>Throw</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1695471055%2FFunctions%2F-1794231652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:kore:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-root-folder/index.html">RootFolder</a><span class="token punctuation">.</span><a href="valid-root-folder-or-throw.html"><span class="token function">validRootFolderOrThrow</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html">File</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
